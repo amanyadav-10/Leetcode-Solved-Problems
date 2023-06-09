@@ -1,30 +1,39 @@
 class Solution {
 public:
-    int findCircleNum(vector<vector<int>>& iscon) {
-        int n= iscon.size();
-        int ans=0;
-//         make the vis list 
-        vector<int> vis(n,0);
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+        vector<int> adj[n];
         
         for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(isConnected[i][j]==1){
+                    adj[i].push_back(j);
+                    adj[j].push_back(i);
+                }
+            }
+        }
+        
+//        vectorMutn
+        int ans =0;
+        
+        vector<int> vis(n,0);
+        for(int i=0;i<n;i++){
             if(!vis[i]){
-                dfs(i,vis,iscon,n);
+                dfs(i,vis,adj);
                 ans++;
             }
         }
         return ans;
+        
+        
     }
     
-//     we will directly write the DFS on the adjacency matrix
-    // and count number of times the dfs has been called to get the solution of the problem 
-    
-    void dfs(int i,vector<int>& vis,vector<vector<int>>& arr,int n){
+    void dfs(int i,vector<int>& vis,vector<int> adj[]){
         vis[i]=1;
-        for(int j=0;j<n;j++){
-            if(arr[i][j]==1 && !vis[j]){
-                dfs(j,vis,arr,n);
+        for(auto x : adj[i]){
+            if(!vis[x]){
+                dfs(x,vis,adj);
             }
         }
     }
-    
 };
