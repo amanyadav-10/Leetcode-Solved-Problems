@@ -4,7 +4,7 @@ public:
         int n = prices.size();
         vector<vector<vector<int>>> dp(n,
                                     vector<vector<int>> 
-                                            (2,vector<int>(3,-1)));
+                                            (2,vector<int>(2+1,-1)));
         return helper(prices,0,1,2,dp);
     }
     
@@ -37,3 +37,5 @@ public:
         
     }
 };
+
+// this problem is based on three dimensional dp we have to keep track of the things that we have
