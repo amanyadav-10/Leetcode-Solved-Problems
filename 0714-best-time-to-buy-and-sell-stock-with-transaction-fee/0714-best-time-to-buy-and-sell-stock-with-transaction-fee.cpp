@@ -1,12 +1,27 @@
 class Solution {
+    
 public:
     int maxProfit(vector<int>& prices, int fee) {
-        int s0 = 0, s1 = INT_MIN; 
-        for(int p:prices) {
-            int tmp = s0;
-            s0 = max(s0, s1+p);
-            s1 = max(s1, tmp-p-fee);
+        int n = prices.size();
+        vector<vector<int>> dp(n,vector<int>(2,-1));
+        return helper(prices,0,1,dp,fee);
+    }
+    
+    int helper(vector<int>& price,int i,int fl,vector<vector<int>>& dp,int fee){
+        if(i==price.size()){
+            return 0;
         }
-        return s0;
+        
+        if(dp[i][fl]!=-1){
+            return dp[i][fl];
+        }
+        int ans = 0;
+        if(fl){
+            ans = max((-price[i]+helper(price,i+1,!fl,dp,fee)),(helper(price,i+1,fl,dp,fee)));
+        }
+        else{
+            ans = max((price[i]+helper(price,i+1,!fl,dp,fee)-fee),helper(price,i+1,fl,dp,fee));
+        }
+        return dp[i][fl] = ans;
     }
 };
