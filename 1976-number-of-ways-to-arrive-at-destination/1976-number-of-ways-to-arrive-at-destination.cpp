@@ -25,7 +25,7 @@ public:
             auto a = pq.top().first;
             auto b = pq.top().second;
             pq.pop();
-            if(a>dis[b]) continue;
+            // if(a>dis[b]) continue;
             for(auto x : arr[b]){
                 auto node = x.first;
                 auto wt = x.second;
@@ -45,3 +45,5 @@ public:
         
     }
 };
+
+// this is a classical example of the Dijkstra we had to maintain the number of paths as well as the
