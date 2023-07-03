@@ -1,23 +1,25 @@
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-//         Moore voting algorithm
-        int count =1;
-        int res=nums[0];
-//         candidate for majority element
-        for(int i=1;i<nums.size();i++){
-            if(count==0){
-                res=nums[i];
+//         the moore voting algorithm solution to the problem 
+        int n = nums.size();
+        int count = 1;
+        int res  = nums[0];
+        for(int i=0;i<n;i++){
+            if(res==nums[i]){
                 count++;
-                continue;
+                
             }
-            if(nums[i]!=res){
-                count -=1;
-            }          
             else{
-                count+=1;
+                count--;
+            }
+            if(count ==0){
+                res = nums[i]; 
+                count = 1;
+                // new element is potentially the majority element now
             }
         }
         return res;
+        
     }
 };
