@@ -1,29 +1,27 @@
 class Solution {
 public:
-    int dp[2501];
     int lengthOfLIS(vector<int>& nums) {
-        int n = nums.size();
-        for(int i=0;i<=n;i++){
-            dp[i] = -1;
-        }
-        int val = 0;
-        for(int i=0;i<n;i++){
-            val = max(val,helper(i,nums));
-        }
+        vector<vector<int>> dp(2502,vector<int>(2503,-1));
         
-        return val;
+        return helper(0,-1,nums,dp);
     }
     
-    int helper(int n,vector<int>& nums){
-        int maxi = 1;
-        if(dp[n]!=-1){
-            return dp[n];
+    int helper(int i,int prev,vector<int>& ans,vector<vector<int>>& dp){
+        if(i==ans.size()){
+            return 0;
         }
-        for(int j=0;j<n;j++){
-            if(nums[n]>nums[j]){
-                maxi = max(maxi,helper(j,nums)+1);
-            }
+        if(dp[i][prev+1]!=-1){
+            return dp[i][prev+1];
         }
-        return dp[n] = maxi;
+        int not_take = helper(i+1,prev,ans,dp);
+        int take = 0;
+        if(prev == -1 || ans[i] > ans[prev]){
+            take = 1+ helper(i+1,i,ans,dp);
+        }
+        return dp[i][prev+1]=max(take,not_take);
     }
 };
+
+// the solution is passing for the
+// we will write the dp solution to the problem 
+// we have two state here that is the index and the prev element 
