@@ -16,19 +16,15 @@ public:
             return 0;
         }
         
-        if (!root->left) {
-            return 1 + minDepth(root->right);
-        } else if (!root->right) {
-            return 1 + minDepth(root->left);
+        if(!root->left){ //if the left part is not a valid node we call the function for the right part
+            return 1+minDepth(root->right);
         }
-        
-//         here is the condition if only child is non-null we go to that 
-        
-        int l = minDepth(root->left);
+        else if(!root->right){
+            return 1+minDepth(root->left);
+        }
+        int  l = minDepth(root->left);
         int r = minDepth(root->right);
-        return min(l,r)+1;
-        
-    
+        return 1 + min(l,r);
         
     }
 };
