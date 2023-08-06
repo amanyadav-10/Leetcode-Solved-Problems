@@ -1,39 +1,40 @@
 class Solution {
-public:
+public:    
+    // vector<int> par;
     int findCircleNum(vector<vector<int>>& isConnected) {
         int n = isConnected.size();
-        vector<int> adj[n];
-        
+        int ans = 0;
+        vector<int> par(n);
         for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
+            par[i]=i;
+        }
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
                 if(isConnected[i][j]==1){
-                    adj[i].push_back(j);
-                    adj[j].push_back(i);
+                    unionfind(i,j,par);
                 }
             }
         }
-        
-//        vectorMutn
-        int ans =0;
-        
-        vector<int> vis(n,0);
         for(int i=0;i<n;i++){
-            if(!vis[i]){
-                dfs(i,vis,adj);
+            if(par[i]==i){
                 ans++;
             }
         }
         return ans;
-        
-        
     }
     
-    void dfs(int i,vector<int>& vis,vector<int> adj[]){
-        vis[i]=1;
-        for(auto x : adj[i]){
-            if(!vis[x]){
-                dfs(x,vis,adj);
-            }
+    int findPar(int u,vector<int>& par){
+        if(par[u]==u){
+            return u;
+        }
+        return par[u] = findPar(par[u],par);
+    }
+    
+    void unionfind(int u,int v,vector<int> &par){
+        int ulp_u = findPar(u,par);
+        int ulp_v = findPar(v,par);
+        if(ulp_u!=ulp_v){
+            par[ulp_u]=ulp_v;
         }
     }
 };
