@@ -30,6 +30,5 @@ public:
         }
         
         return dp[i][j] =  helper(i-1,j,grid) + helper(i,j-1,grid);
-        
     }
 };
