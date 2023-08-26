@@ -10,18 +10,18 @@ class Solution
   public:
   long long largestSumCycle(int n, vector<int> edge)
   {
-    // make the indegree lsit here
-    vector<int> indegree(n,0);
+    // code here
+    vector<int> inde(n,0);
     for(auto x: edge){
         if(x!=-1){
-            indegree[x]++;
+            inde[x]++;
         }
     }
     
     queue<int> q;
     vector<int> vis(n,0);
     for(int i=0;i<n;i++){
-        if(indegree[i]==0){
+        if(inde[i]==0){
             vis[i]=1;
             q.push(i);
         }
@@ -33,14 +33,16 @@ class Solution
         if(edge[node]==-1){
             continue;
         }
-        --indegree[edge[node]];
-        if(indegree[edge[node]]==0){
-            vis[edge[node]]=1;
+        --inde[edge[node]];
+        if(inde[edge[node]]==0){
             q.push(edge[node]);
+            vis[edge[node]]=1;
         }
     }
     
+    
     int ans = -1;
+    
     for(int i=0;i<n;i++){
         if(vis[i]){
             continue;
@@ -52,8 +54,8 @@ class Solution
         }
         ans=max(ans,val);
     }
-    
     return ans;
+    
   }
 };
 
