@@ -9,22 +9,18 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-//       this is a classic algo to determine if there is a cycle in the 
-        if(head==NULL or head->next==NULL){
-            return false;
-        }
-        ListNode* fast=head;
-        ListNode* slow=head;
-        while(fast->next!=NULL && fast->next->next!=NULL){
-            
-            fast=fast->next->next;
-            slow=slow->next;
-            
-            if(slow==fast){
+//         We will use the concept of slow and fast pointer to solve this problem 
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow == fast){
                 return true;
             }
         }
         return false;
+        
         
     }
 };
